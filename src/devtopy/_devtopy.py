@@ -14,7 +14,7 @@ from .module._profile_images import ProfileImages
 from .module._reactions import Reactions
 from .module._videos import Videos
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 
 
 class DevTo:
