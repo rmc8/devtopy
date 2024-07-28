@@ -1,6 +1,6 @@
 [project]
 name = "devtopy"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Python client library for interacting with the dev.to API. Easily access key dev.to features including article retrieval, posting, and user information management."
 authors = [{ name = "rmc-8.com", email = "kmyashi@rmc-8.com" }]
 dependencies = ["pydantic>=2.8.2", "requests>=2.32.3"]
