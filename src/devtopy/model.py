@@ -101,3 +101,18 @@ class PublishedArticle(BaseModel):
 
 class PublishedArticleList(BaseModel):
     articles: List[PublishedArticle]
+
+
+class Comment(BaseModel):
+    type_of: str = Field(..., description="Type of the comment")
+    id_code: str = Field(..., description="Unique identifier for the comment")
+    created_at: str = Field(..., description="Creation timestamp of the comment")
+    body_html: str = Field(..., description="HTML content of the comment")
+    user: User
+    children: List["Comment"] = Field(
+        default_factory=list, description="Nested replies to this comment"
+    )
+
+
+class CommentList(BaseModel):
+    comments: List[Comment]

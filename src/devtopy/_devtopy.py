@@ -5,6 +5,7 @@ import requests
 
 from .module._article import Articles
 from .module._users import Users
+from .module._cooments import Comments
 
 
 VERSION = "0.1.0"
@@ -19,6 +20,7 @@ class DevTo:
         self.session = requests.Session()
         self.articles = Articles(self)
         self.users = Users(self)
+        self.comments = Comments(self)
 
     def _fil_none(self, prams: Dict[str, Any]) -> Dict[str, Any]:
         return {k: v for k, v in prams.items() if v is not None}
