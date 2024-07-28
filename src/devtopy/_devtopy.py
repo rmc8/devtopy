@@ -9,7 +9,7 @@ from .module._comments import Comments
 from .module._followed_tags import FollowedTags
 from .module._tags import Tags
 from .module._organizations import Organizations
-
+from .module._podcast_episodes import PodcastEpisodes
 
 VERSION = "0.1.0"
 
@@ -27,6 +27,7 @@ class DevTo:
         self.followed_tags = FollowedTags(self)
         self.tags = Tags(self)
         self.organizations = Organizations(self)
+        self.podcast_episodes = PodcastEpisodes(self)
 
     def _fil_none(self, prams: Dict[str, Any]) -> Dict[str, Any]:
         return {k: v for k, v in prams.items() if v is not None}

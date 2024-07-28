@@ -154,3 +154,23 @@ class Organization(BaseModel):
     story: Optional[str] = None
     joined_at: Optional[str] = None
     profile_image: Optional[str] = None
+
+
+class Podcast(BaseModel):
+    title: str
+    slug: str
+    image_url: Optional[Union[str, HttpUrl]] = None
+
+
+class PodcastEpisode(BaseModel):
+    type_of: str
+    class_name: str
+    id: int
+    path: str
+    title: str
+    image_url: Optional[str] = None
+    podcast: Podcast
+
+
+class PodcastEpisodeList(BaseModel):
+    podcast_episodes: List[PodcastEpisode]
