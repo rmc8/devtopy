@@ -1,11 +1,16 @@
-from typing import List, Optional, Union
+from typing import List, Optional, Union, TYPE_CHECKING
 
 from ..model import Article, ErrorResponse, PublishedArticleList, PublishedArticle
 from ..exception import DotDevApiError
 
 
+if TYPE_CHECKING:
+    from .._devtopy import DevTo
+
+
 class Articles:
-    def __init__(self, parent):
+
+    def __init__(self, parent: "DevTo"):
         self.parent = parent
 
     def publish(
