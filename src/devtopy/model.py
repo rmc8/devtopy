@@ -14,7 +14,7 @@ class User(BaseModel):
     twitter_username: Optional[str] = None
     github_username: Optional[str] = None
     user_id: Optional[int] = None
-    website_url: Optional[Union[HttpUrl | str]] = None
+    website_url: Optional[Union[HttpUrl, str]] = None
     profile_image: Optional[str] = None
     profile_image_90: Optional[str] = None
 
@@ -137,3 +137,20 @@ class Tag(BaseModel):
 
 class TagList(BaseModel):
     tags: List[Tag]
+
+
+class Organization(BaseModel):
+    type_of: str
+    id: int
+    username: str
+    name: str
+    summary: Optional[str] = None
+    twitter_username: Optional[str] = None
+    github_username: Optional[str] = None
+    url: Optional[Union[HttpUrl, str]] = None
+    location: Optional[str] = None
+    tech_stack: Optional[str] = None
+    tag_line: Optional[str] = None
+    story: Optional[str] = None
+    joined_at: Optional[str] = None
+    profile_image: Optional[str] = None

@@ -8,6 +8,7 @@ from .module._users import Users
 from .module._comments import Comments
 from .module._followed_tags import FollowedTags
 from .module._tags import Tags
+from .module._organizations import Organizations
 
 
 VERSION = "0.1.0"
@@ -25,6 +26,7 @@ class DevTo:
         self.comments = Comments(self)
         self.followed_tags = FollowedTags(self)
         self.tags = Tags(self)
+        self.organizations = Organizations(self)
 
     def _fil_none(self, prams: Dict[str, Any]) -> Dict[str, Any]:
         return {k: v for k, v in prams.items() if v is not None}
