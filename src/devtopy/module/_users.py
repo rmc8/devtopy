@@ -1,4 +1,4 @@
-from typing import List, Optional, Union, TYPE_CHECKING
+from typing import Optional, Union, TYPE_CHECKING
 
 from ..model import User, UserList, ErrorResponse
 from ..exception import DotDevApiError
@@ -13,7 +13,7 @@ class Users:
     def __init__(self, parent: "DevTo"):
         self.parent = parent
 
-    def get_organization_users(self, username: str):
+    def get_organization_users(self, username: str) -> Union[UserList, ErrorResponse]:
         endpoint = self.parent._build_url(f"organizations/{username}/users")
         res = self.parent._request("GET", endpoint)
         if res.status_code == 200:
@@ -25,7 +25,7 @@ class Users:
             return ErrorResponse(**data)
         raise DotDevApiError(response=res)
 
-    def get_me(self) -> User:
+    def get_me(self) -> Union[User, ErrorResponse]:
         endpoint = self.parent._build_url("users/me")
         res = self.parent._request("GET", endpoint)
         if res.status_code == 200:

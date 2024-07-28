@@ -13,7 +13,7 @@ class Comments:
     def __init__(self, parent: "DevTo"):
         self.parent = parent
 
-    def get_article_comments(self, a_id: str):
+    def get_article_comments(self, a_id: str) -> Union[CommentList, ErrorResponse]:
         params = {"a_id": a_id}
         endpoint = self.parent._build_url_with_params("comments", params=params)
         res = self.parent._request("GET", endpoint)
@@ -26,7 +26,9 @@ class Comments:
             return ErrorResponse(**data)
         raise DotDevApiError(response=res)
 
-    def get_podcast_episode_comments(self, p_id: str):
+    def get_podcast_episode_comments(
+        self, p_id: str
+    ) -> Union[CommentList, ErrorResponse]:
         params = {"p_id": p_id}
         endpoint = self.parent._build_url_with_params("comments", params=params)
         res = self.parent._request("GET", endpoint)
@@ -39,7 +41,7 @@ class Comments:
             return ErrorResponse(**data)
         raise DotDevApiError(response=res)
 
-    def get_comment_by_id(self, id_code: str):
+    def get_comment_by_id(self, id_code: str) -> Union[Comment, ErrorResponse]:
         endpoint = self.parent._build_url(f"comments/{id_code}")
         res = self.parent._request("GET", endpoint)
         if res.status_code == 200:

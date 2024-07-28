@@ -116,3 +116,13 @@ class Comment(BaseModel):
 
 class CommentList(BaseModel):
     comments: List[Comment]
+
+
+class Tag(BaseModel):
+    id: int
+    name: str
+    points: float
+
+
+class TagList(BaseModel):
+    tags: List[Tag]

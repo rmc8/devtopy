@@ -5,7 +5,8 @@ import requests
 
 from .module._article import Articles
 from .module._users import Users
-from .module._cooments import Comments
+from .module._comments import Comments
+from .module._followed_tags import FollowedTags
 
 
 VERSION = "0.1.0"
@@ -21,6 +22,7 @@ class DevTo:
         self.articles = Articles(self)
         self.users = Users(self)
         self.comments = Comments(self)
+        self.followed_tags = FollowedTags(self)
 
     def _fil_none(self, prams: Dict[str, Any]) -> Dict[str, Any]:
         return {k: v for k, v in prams.items() if v is not None}
