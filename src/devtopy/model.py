@@ -174,3 +174,10 @@ class PodcastEpisode(BaseModel):
 
 class PodcastEpisodeList(BaseModel):
     podcast_episodes: List[PodcastEpisode]
+
+
+class ProfileImage(BaseModel):
+    type_of: str
+    image_of: str
+    profile_image: Optional[Union[str, HttpUrl]] = None
+    profile_image_90: Optional[Union[str, HttpUrl]] = None
