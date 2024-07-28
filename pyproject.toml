@@ -11,6 +11,9 @@ requires-python = ">= 3.8"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[project.urls]
+Homepage = "https://github.com/rmc8/devtopy"
+
 [tool.rye]
 managed = true
 dev-dependencies = [
