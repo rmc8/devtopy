@@ -189,3 +189,23 @@ class Reaction(BaseModel):
     id: int
     reactable_id: int
     reactable_type: str
+
+
+class VideoArticleUser(BaseModel):
+    name: str
+
+
+class VideoArticle(BaseModel):
+    type_of: str
+    id: int
+    path: Optional[str] = None
+    cloudinary_video_url: Optional[str] = None
+    title: str
+    user_id: int
+    video_duration_in_minutes: str
+    video_source_url: HttpUrl
+    user: VideoArticleUser
+
+
+class VideoArticleList(BaseModel):
+    video_articles: List[VideoArticle]
