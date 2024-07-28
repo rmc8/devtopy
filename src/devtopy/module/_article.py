@@ -214,6 +214,16 @@ class Articles:
 
     # Unpublish
 
-    # Organizations Article
+    def get_organization_articles(self, username: str) -> PublishedArticleList:
+        endpoint = self.parent._build_url(f"organizations/{username}/articles")
+        res = self.parent._request("GET", endpoint)
+        if res.status_code == 200:
+            data = res.json()
+            articles = [PublishedArticle(**a) for a in data]
+            return PublishedArticleList(articles=articles)
+        elif res.status_code == 404:
+            data = res.json()
+            return ErrorResponse(**data)
+        raise DotDevApiError(response=res)
 
     # Article with a video

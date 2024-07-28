@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Union
 
 from pydantic import BaseModel, HttpUrl, Field
 
@@ -13,10 +13,14 @@ class User(BaseModel):
     username: str
     twitter_username: Optional[str] = None
     github_username: Optional[str] = None
-    user_id: int
-    website_url: Optional[HttpUrl] = None
-    profile_image: str
-    profile_image_90: str
+    user_id: Optional[int] = None
+    website_url: Optional[Union[HttpUrl | str]] = None
+    profile_image: Optional[str] = None
+    profile_image_90: Optional[str] = None
+
+
+class UserList(BaseModel):
+    users: List[User]
 
 
 class Organization(BaseModel):
