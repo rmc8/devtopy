@@ -118,10 +118,21 @@ class CommentList(BaseModel):
     comments: List[Comment]
 
 
-class Tag(BaseModel):
+class FollowedTag(BaseModel):
     id: int
     name: str
     points: float
+
+
+class FollowedTagList(BaseModel):
+    tags: List[FollowedTag]
+
+
+class Tag(BaseModel):
+    id: int
+    name: str
+    bg_color_hex: Optional[str] = None
+    text_color_hex: Optional[str] = None
 
 
 class TagList(BaseModel):
