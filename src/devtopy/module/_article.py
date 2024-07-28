@@ -1,11 +1,16 @@
-from typing import List, Optional, Union
+from typing import List, Optional, Union, TYPE_CHECKING
 
 from ..model import Article, ErrorResponse, PublishedArticleList, PublishedArticle
 from ..exception import DotDevApiError
 
 
+if TYPE_CHECKING:
+    from .._devtopy import DevTo
+
+
 class Articles:
-    def __init__(self, parent):
+
+    def __init__(self, parent: "DevTo"):
         self.parent = parent
 
     def publish(
@@ -53,7 +58,7 @@ class Articles:
         state: Optional[str] = None,
         top: Optional[int] = None,
         collection_id: int = None,
-    ) -> PublishedArticleList:
+    ) -> Union[PublishedArticleList, ErrorResponse]:
         params = {
             "page": page,
             "per_page": per_page,
@@ -77,7 +82,7 @@ class Articles:
         self,
         page: int = 1,
         per_page: int = 30,
-    ) -> PublishedArticleList:
+    ) -> Union[PublishedArticleList, ErrorResponse]:
         params = {
             "page": page,
             "per_page": per_page,
@@ -88,7 +93,7 @@ class Articles:
         articles = [PublishedArticle(**a) for a in data]
         return PublishedArticleList(articles=articles)
 
-    def get_by_id(self, id: int) -> Article:
+    def get_by_id(self, id: int) -> Union[Article, ErrorResponse]:
         endpoint = self.parent._build_url(f"articles/{id}")
         res = self.parent._request("GET", endpoint)
         if res.status_code == 200:
@@ -111,7 +116,7 @@ class Articles:
         main_image: Optional[str] = None,
         canonical_url: Optional[str] = None,
         organization_id: Optional[int] = None,
-    ) -> Article:
+    ) -> Union[Article, ErrorResponse]:
         endpoint = self.parent._build_url(f"articles/{id}")
         article = {
             "title": title,
@@ -149,7 +154,7 @@ class Articles:
         self,
         page: int = 1,
         per_page: int = 30,
-    ) -> PublishedArticleList:
+    ) -> Union[PublishedArticleList, ErrorResponse]:
         params = {"page": page, "per_page": per_page}
         endpoint = self.parent._build_url_with_params("articles/me", params)
         res = self.parent._request("GET", endpoint)
@@ -164,7 +169,7 @@ class Articles:
 
     def get_my_published_articles(
         self, page: int = 1, per_page: int = 30
-    ) -> PublishedArticleList:
+    ) -> Union[PublishedArticleList, ErrorResponse]:
         params = {"page": page, "per_page": per_page}
         endpoint = self.parent._build_url_with_params("articles/me/published", params)
         res = self.parent._request("GET", endpoint)
@@ -179,7 +184,7 @@ class Articles:
 
     def get_my_unpublished_articles(
         self, page: int = 1, per_page: int = 30
-    ) -> PublishedArticleList:
+    ) -> Union[PublishedArticleList, ErrorResponse]:
         params = {"page": page, "per_page": per_page}
         endpoint = self.parent._build_url_with_params("articles/me/unpublished", params)
         res = self.parent._request("GET", endpoint)
@@ -194,7 +199,7 @@ class Articles:
 
     def get_all_my_articles(
         self, page: int = 1, per_page: int = 30
-    ) -> PublishedArticleList:
+    ) -> Union[PublishedArticleList, ErrorResponse]:
         params = {"page": page, "per_page": per_page}
         endpoint = self.parent._build_url_with_params("articles/me/all", params)
         res = self.parent._request("GET", endpoint)
@@ -209,6 +214,18 @@ class Articles:
 
     # Unpublish
 
-    # Organizations Article
+    def get_organization_articles(
+        self, username: str
+    ) -> Union[PublishedArticleList, ErrorResponse]:
+        endpoint = self.parent._build_url(f"organizations/{username}/articles")
+        res = self.parent._request("GET", endpoint)
+        if res.status_code == 200:
+            data = res.json()
+            articles = [PublishedArticle(**a) for a in data]
+            return PublishedArticleList(articles=articles)
+        elif res.status_code == 404:
+            data = res.json()
+            return ErrorResponse(**data)
+        raise DotDevApiError(response=res)
 
     # Article with a video

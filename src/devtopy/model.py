@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Union
 
 from pydantic import BaseModel, HttpUrl, Field
 
@@ -13,10 +13,14 @@ class User(BaseModel):
     username: str
     twitter_username: Optional[str] = None
     github_username: Optional[str] = None
-    user_id: int
-    website_url: Optional[HttpUrl] = None
-    profile_image: str
-    profile_image_90: str
+    user_id: Optional[int] = None
+    website_url: Optional[Union[HttpUrl, str]] = None
+    profile_image: Optional[str] = None
+    profile_image_90: Optional[str] = None
+
+
+class UserList(BaseModel):
+    users: List[User]
 
 
 class Organization(BaseModel):
@@ -97,3 +101,111 @@ class PublishedArticle(BaseModel):
 
 class PublishedArticleList(BaseModel):
     articles: List[PublishedArticle]
+
+
+class Comment(BaseModel):
+    type_of: str = Field(..., description="Type of the comment")
+    id_code: str = Field(..., description="Unique identifier for the comment")
+    created_at: str = Field(..., description="Creation timestamp of the comment")
+    body_html: str = Field(..., description="HTML content of the comment")
+    user: User
+    children: List["Comment"] = Field(
+        default_factory=list, description="Nested replies to this comment"
+    )
+
+
+class CommentList(BaseModel):
+    comments: List[Comment]
+
+
+class FollowedTag(BaseModel):
+    id: int
+    name: str
+    points: float
+
+
+class FollowedTagList(BaseModel):
+    tags: List[FollowedTag]
+
+
+class Tag(BaseModel):
+    id: int
+    name: str
+    bg_color_hex: Optional[str] = None
+    text_color_hex: Optional[str] = None
+
+
+class TagList(BaseModel):
+    tags: List[Tag]
+
+
+class Organization(BaseModel):
+    type_of: str
+    id: int
+    username: str
+    name: str
+    summary: Optional[str] = None
+    twitter_username: Optional[str] = None
+    github_username: Optional[str] = None
+    url: Optional[Union[HttpUrl, str]] = None
+    location: Optional[str] = None
+    tech_stack: Optional[str] = None
+    tag_line: Optional[str] = None
+    story: Optional[str] = None
+    joined_at: Optional[str] = None
+    profile_image: Optional[str] = None
+
+
+class Podcast(BaseModel):
+    title: str
+    slug: str
+    image_url: Optional[Union[str, HttpUrl]] = None
+
+
+class PodcastEpisode(BaseModel):
+    type_of: str
+    class_name: str
+    id: int
+    path: str
+    title: str
+    image_url: Optional[str] = None
+    podcast: Podcast
+
+
+class PodcastEpisodeList(BaseModel):
+    podcast_episodes: List[PodcastEpisode]
+
+
+class ProfileImage(BaseModel):
+    type_of: str
+    image_of: str
+    profile_image: Optional[Union[str, HttpUrl]] = None
+    profile_image_90: Optional[Union[str, HttpUrl]] = None
+
+
+class Reaction(BaseModel):
+    result: str
+    category: str
+    id: int
+    reactable_id: int
+    reactable_type: str
+
+
+class VideoArticleUser(BaseModel):
+    name: str
+
+
+class VideoArticle(BaseModel):
+    type_of: str
+    id: int
+    path: Optional[str] = None
+    cloudinary_video_url: Optional[str] = None
+    title: str
+    user_id: int
+    video_duration_in_minutes: str
+    video_source_url: HttpUrl
+    user: VideoArticleUser
+
+
+class VideoArticleList(BaseModel):
+    video_articles: List[VideoArticle]
