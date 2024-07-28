@@ -11,6 +11,7 @@ from .module._tags import Tags
 from .module._organizations import Organizations
 from .module._podcast_episodes import PodcastEpisodes
 from .module._profile_images import ProfileImages
+from .module._reactions import Reactions
 
 VERSION = "0.1.0"
 
@@ -30,6 +31,7 @@ class DevTo:
         self.organizations = Organizations(self)
         self.podcast_episodes = PodcastEpisodes(self)
         self.profile_images = ProfileImages(self)
+        self.reactions = Reactions(self)
 
     def _fil_none(self, prams: Dict[str, Any]) -> Dict[str, Any]:
         return {k: v for k, v in prams.items() if v is not None}

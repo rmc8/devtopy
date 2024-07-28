@@ -181,3 +181,11 @@ class ProfileImage(BaseModel):
     image_of: str
     profile_image: Optional[Union[str, HttpUrl]] = None
     profile_image_90: Optional[Union[str, HttpUrl]] = None
+
+
+class Reaction(BaseModel):
+    result: str
+    category: str
+    id: int
+    reactable_id: int
+    reactable_type: str
